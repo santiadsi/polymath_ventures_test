@@ -1,0 +1,47 @@
+<h1>Tasks</h1>
+
+<%= form_for_filterrific @filterrific do |f| %>
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+        Search description <%= f.text_field(:search_query, class: 'form-control') %>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div>filter</div>
+      <button type="submit" class="btn btn-primary">Filter tasks</button>
+    </div>
+
+    <div class="col-sm">
+      <%= link_to('Clear filters', reset_filterrific_url) %>
+    </div>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Complete</th>
+      <th>User</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.description %></td>
+        <td><%= task.complete %></td>
+        <td><%= task.user_id %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @tasks %>
+<br>
+
+<%= link_to 'New Task', new_task_path, class: "btn btn-primary" %>
